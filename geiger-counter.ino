@@ -12,7 +12,7 @@ GPIO23 - MOSI
 Geiger:
 GPIO16 - Data (change eventually)
 GPIO15 - Save button (toggle ON/OFF)
-GPIO32 - LED save indicatior
+GPIO32 - LED save indicator
 
 TODO:
 Add other output devices
@@ -70,7 +70,6 @@ void setup() {
   lcd.setCursor(0, 0);
   lcd.print("Geigerzaehler");
 
-
   //SPI.begin(cardSCKPin, cardMISOPin, cardMOSIPin, cardCSPin);
   if(!SD.begin()) {
     Serial.println("Card Mount Failed");
@@ -84,7 +83,6 @@ void setup() {
 
 void loop() {
   if (particleCount != lastParticleCount) {
-    // Serial.println(particleCount);
     lastParticleCount = particleCount;
 
     DateTime now = rtc.now();
@@ -119,7 +117,6 @@ void loop() {
 
 
       if (isSavingActive) {
-        //DateTime now = rtc.now().unixtime();
         logFilePath = "/" + String(rtc.now().unixtime()) + ".txt";
 
         Serial.println("Writing to file: " + logFilePath);
