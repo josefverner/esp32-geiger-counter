@@ -12,7 +12,6 @@
 - 1× 1 MΩ Resistor (for the Geiger Counter)
 - 1× 10 kΩ Potentiometer (for the LCD Display backlight)
 
- // To set up the clock acc, comment the if condition below
 ## Connections
 - Geiger Counter:
 - LCD Display:
