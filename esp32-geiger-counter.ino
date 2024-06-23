@@ -2,20 +2,27 @@
 I2C: LCD, RTC
 GPIO22 - CL
 GPIO21 - DA
+GND - GND
 
 SPI: SD Card
-GPIO05 - SS
+GPIO05 - SS/CS
 GPIO18 - CLK
 GPIO19 - MISO
 GPIO23 - MOSI
+GND - GND
 
 Geiger:
 GPIO16 - Data (change eventually)
 GPIO15 - Save button (toggle ON/OFF)
 GPIO32 - LED save indicator
+GND - GND
 
-TODO:
-Add other output devices
+Button:
+GPIO15 - Save button
+GND - GND
+
+1 MΩ Resistor:
+GPIO16 - GND
 
 */
 #include <RTClib.h>
