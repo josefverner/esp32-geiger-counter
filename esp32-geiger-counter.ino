@@ -12,7 +12,7 @@ GPIO23 - MOSI
 GND - GND
 
 Geiger:
-GPIO16 - Data (change eventually)
+GPIO16 - Data
 GPIO15 - Save button (toggle ON/OFF)
 GPIO32 - LED save indicator
 GND - GND
