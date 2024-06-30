@@ -19,16 +19,19 @@
 - LCD Display:
   - GPIO22 - CL
   - GPIO21 - DA
+  - 5V - VCC
   - GND - GND
 - DS1307 RTC Module:
   - GPIO22 - CL
   - GPIO21 - DA
+  - 5V - VCC
   - GND - GND
 - SD Card Module:
   - GPIO05 - SS/CS
   - GPIO18 - CLK
   - GPIO19 - MISO
   - GPIO23 - MOSI
+  - 5V - VCC
   - GND - GND
 - Button:
   - GPIO15 - Save button
@@ -37,6 +40,11 @@
   - GPIO02 - Data
   - 5V - VCC
   - GND - GND
+- 1 MΩ Resistor:
+  - GPIO16 - GND
+- 10 kΩ Potentiometer
+  - LCD jumper - Potentiometer first pin
+  - LCD jumper - Potentiometer middle pin
 
 ## ESP32 Pinout
 ![ESP32 Pinout](./assets/pinoutESP32NodeMCU.png)
