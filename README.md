@@ -1,5 +1,12 @@
 # Geiger Counter
 
+## Geiger Counter Tube Specifications
+- **Type:** J305βγ
+- CPM to µSv/h conversion factor: **0.00812** (?)
+
+## Calculating the CPM to µSv/h conversion formula
+μSv/h = CPM × conversion factor
+
 ## Hardware Setup
 - 1× Geiger Counter
 - 1× [ESP32 Dev Board](https://www.az-delivery.de/products/esp32-developmentboard)
