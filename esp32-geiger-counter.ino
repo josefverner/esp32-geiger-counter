@@ -1,5 +1,14 @@
 /*
-I2C: LCD, RTC
+TFT Display: 320×240
+GPIO25 - CS
+GPIO32 - DC
+GPIO33 - RST
+GPIO23 - MOSI
+GPIO19 - MISO
+GPIO18 - CLK
+5V - LED
+
+I2C: RTC
 GPIO22 - CL
 GPIO21 - DA
 GND - GND
@@ -25,10 +34,12 @@ GND - GND
 GPIO16 - GND
 */
 
-#include <RTClib.h>
-#include <LiquidCrystal_I2C.h>
-#include <SD.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ILI9341.h>
 #include <Adafruit_NeoPixel.h>
+#include <RTClib.h>
+#include <SD.h>
+#include <SPI.h>
 
 #define DEBOUNCE_TIME 50
 #define PIN_GEIGER_DATA 16
@@ -61,19 +72,18 @@ String logFilePath;
 int lcdColumns = 16;
 int lcdRows = 2;
 
-LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows); 
+LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows);
 
 void IRAM_ATTR ISR_particles() {
   particleCount++;
 }
-
 
 void setup() {
   Serial.begin(115200);
 
   NeoPixel.begin();
 
-  if (! rtc.begin()) {
+  if (!rtc.begin()) {
     Serial.println("RTC not found");
     while (1);
   }
@@ -81,7 +91,7 @@ void setup() {
   NeoPixel.setPixelColor(INDEX_NEO_PIXEL, 0x00310044);
   NeoPixel.show();
 
-  if (! rtc.isrunning()) {
+  if (!rtc.isrunning()) {
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   }
 
@@ -95,8 +105,8 @@ void setup() {
   NeoPixel.show();
   delay(100);
 
-  //SPI.begin(cardSCKPin, cardMISOPin, cardMOSIPin, cardCSPin);
-  if(!SD.begin()) {
+  // SPI.begin(cardSCKPin, cardMISOPin, cardMOSIPin, cardCSPin);
+  if (!SD.begin()) {
     Serial.println("Card Mount Failed");
     return;
   }
@@ -110,7 +120,6 @@ void setup() {
 
 void loop() {
   if (particleCount != lastParticleCount) {
-
     NeoPixel.setPixelColor(INDEX_NEO_PIXEL, neoPixel_Orange);
     NeoPixel.show();
 
@@ -127,7 +136,7 @@ void loop() {
     lcd.print(dateLog);
     lcd.setCursor(0, 1);
     lcd.print(timeLog);
-    if(isSavingActive && logFile) {
+    if (isSavingActive && logFile) {
       logFile.println(dateLog + "T" + timeLog);
     }
 
@@ -143,7 +152,7 @@ void loop() {
   }
 
   if ((millis() - lastDebounceTime) > DEBOUNCE_TIME) {
-    if(lastSteadyButtonState == HIGH && currentButtonState == LOW) {
+    if (lastSteadyButtonState == HIGH && currentButtonState == LOW) {
       Serial.println("The button is pressed");
 
       saveToggle = !saveToggle;
@@ -155,7 +164,7 @@ void loop() {
         Serial.println("Writing to file: " + logFilePath);
 
         logFile = SD.open(logFilePath, FILE_APPEND, true);
-        if(!logFile){
+        if (!logFile) {
           Serial.println("Failed to open file for appending");
           return;
         }
@@ -166,7 +175,7 @@ void loop() {
         neoPixel_CurrentIdleColor = neoPixel_Red;
       } else {
         logFile.close();
-        
+
         NeoPixel.setPixelColor(INDEX_NEO_PIXEL, neoPixel_Green);
         NeoPixel.show();
 
@@ -176,5 +185,4 @@ void loop() {
 
     lastSteadyButtonState = currentButtonState;
   }
-
 }
