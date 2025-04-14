@@ -23,7 +23,7 @@
 ## Wiring
 
 - Geiger Counter:
-  - GPIO16 - Signal
+  - GPIO36 (SP) - Signal
   - 5V - VCC
   - GND - GND
 - TFT Display:
@@ -56,7 +56,7 @@
   - 5V - VCC
   - GND - GND
 - 1 MΩ Resistor:
-  - GPIO16 - GND
+  - GPIO36 (SP) - GND
 
 ## ESP32 Pinout
 

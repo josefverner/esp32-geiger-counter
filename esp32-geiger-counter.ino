@@ -42,7 +42,7 @@ GPIO16 - GND
 #include <SPI.h>
 
 #define DEBOUNCE_TIME 50
-#define PIN_GEIGER_DATA 16
+#define PIN_GEIGER_DATA 36
 #define PIN_BUTTON_SAVE 15
 #define PIN_NEO_PIXEL 2
 #define NUM_NEO_PIXELS 1
