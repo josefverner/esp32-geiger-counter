@@ -47,9 +47,13 @@ GPIO16 - GND
 #define PIN_NEO_PIXEL 2
 #define NUM_NEO_PIXELS 1
 #define INDEX_NEO_PIXEL 0
+#define TFT_CS 25
+#define TFT_DC 32
+#define TFT_RST 33
 
 Adafruit_NeoPixel NeoPixel(NUM_NEO_PIXELS, PIN_NEO_PIXEL, NEO_GRB + NEO_KHZ800);
 RTC_DS1307 rtc;
+Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
 
 volatile unsigned int particleCount = 0;
 unsigned int lastParticleCount = 0;
@@ -68,11 +72,6 @@ uint32_t neoPixel_CurrentIdleColor = neoPixel_Green;
 
 File logFile;
 String logFilePath;
-
-int lcdColumns = 16;
-int lcdRows = 2;
-
-LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows);
 
 void IRAM_ATTR ISR_particles() {
   particleCount++;
@@ -95,11 +94,16 @@ void setup() {
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   }
 
-  lcd.init();
-  lcd.backlight();
+  tft.begin();
+
+  tft.fillScreen(ILI9341_BLACK);
+  // 0 = 0° (Portrait), 1 = 90°, 2 = 180°, 3 = 270°
+  tft.setRotation(3);
   delay(100);
-  lcd.setCursor(0, 0);
-  lcd.print("Geigerzaehler");
+  tft.setCursor(0, 0);
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextSize(1);
+  tft.println("Geigerzaehler");
 
   NeoPixel.setPixelColor(INDEX_NEO_PIXEL, 0x0000298E);
   NeoPixel.show();
@@ -131,11 +135,11 @@ void loop() {
     String dateLog = now.timestamp(DateTime::TIMESTAMP_DATE);
     Serial.println(dateLog + "T" + timeLog);
 
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print(dateLog);
-    lcd.setCursor(0, 1);
-    lcd.print(timeLog);
+    tft.fillScreen(ILI9341_BLACK);
+    tft.setCursor(0, 0);
+    tft.println(dateLog);
+    tft.setCursor(0, 32);
+    tft.println(timeLog);
     if (isSavingActive && logFile) {
       logFile.println(dateLog + "T" + timeLog);
     }
