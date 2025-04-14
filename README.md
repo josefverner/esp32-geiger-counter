@@ -61,3 +61,9 @@
 ## ESP32 Pinout
 
 ![ESP32 Pinout](./assets/pinoutESP32NodeMCU.png)
+
+## Libraries
+
+- [Adafruit_ILI9341](https://github.com/adafruit/Adafruit_ILI9341) - Adafruit ILI9341 Arduino Library.
+- [Adafruit_NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel) - Adafruit NeoPixel Library.
+- [RTClib](https://github.com/adafruit/RTClib) - Adafruit fork of JeeLab's fantastic real time clock library for Arduino.

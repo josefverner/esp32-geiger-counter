@@ -34,7 +34,6 @@ GND - GND
 GPIO16 - GND
 */
 
-#include <Adafruit_GFX.h>
 #include <Adafruit_ILI9341.h>
 #include <Adafruit_NeoPixel.h>
 #include <RTClib.h>
